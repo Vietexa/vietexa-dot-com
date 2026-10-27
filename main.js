@@ -7,3 +7,4 @@ footer.textContent = "© Vietexa.com 2024-" + year + " All rights reserved.";
 }
 
 change_footer();
+
