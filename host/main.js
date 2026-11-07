@@ -5,6 +5,11 @@ async function load_page(page, update_history = true) {
     try {
         const response = await fetch(`/pages/${page}.html`);
 
+        if (response.status === 404) {
+            window.location.replace("/err_msg_404.html");
+            return;
+        }
+
         if (!response.ok) {
             throw new Error("Page not found");
         }
