@@ -8,9 +8,12 @@ const routes = {
 async function load_page(page, update_history = true) {
     const content = document.getElementById("content");
 
-    if (routes[page] == undefined || routes[page] == null){
-        window.location.replace("/err_msg_404.html");
-        console.error(`Error: ${page} doesn't exist in routes!`);
+    if (routes[page] === undefined || routes[page] === null){
+        
+        const response = await fetch("/pages/err_msg_404.html");
+        content.innerHTML = response.text();
+
+        console.log(`Error: ${page} doesn't exist in routes!`);
         return;
     }
     try {
