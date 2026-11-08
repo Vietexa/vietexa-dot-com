@@ -11,7 +11,7 @@ async function load_page(page, update_history = true) {
     if (routes[page] === undefined || routes[page] === null){
         
         const response = await fetch("/pages/err_msg_404.html");
-        content.innerHTML = response.text();
+        content.innerHTML = await response.text();
 
         console.log(`Error: ${page} doesn't exist in routes!`);
         return;
