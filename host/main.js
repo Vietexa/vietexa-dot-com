@@ -77,7 +77,7 @@ function setup_popstate(){
 
 setup_nav();
 
-const path = window.location.pathname;
+const page = window.location.pathname;
 
 load_page(page, false);
 
