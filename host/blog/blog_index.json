@@ -1,0 +1,23 @@
+{
+    "total_blogs": 3,
+    "blogs": [
+        {
+            "title": "My First Blog",
+            "url": "/blog/0",
+            "description": "My first blog post",
+            "date": "11/09/2026"
+        },
+        {
+            "title": "blog1",
+            "url": "/blog/1",
+            "description": "blog1",
+            "date": "11/10/2026"
+        },
+        {
+            "title": "blog2",
+            "url": "/blog/2",
+            "description": "blog2",
+            "date": "11/11/2026"
+        }
+    ]
+}
