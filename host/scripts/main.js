@@ -15,21 +15,36 @@ console.log(`Error: ${page} doesn't exist in routes!`);
 
 }
 
+/*function is_path_valid(page, blog_json_dat){
+
+    for (let blog of blog_json_dat.blogs){
+
+        const blog_path = create_blog_path(blog);
+
+        if (page === blog_path) return true;
+
+    }
+
+    return false;
+
+} */
+
 async function load_chosen_blog(page, update_history, content){
 
         const blog_json_res = await fetch("/blog/blog_index.json");
         const blog_json_dat = await blog_json_res.json();
 
-        const blog_id = page.slice("/blog/".length)
 
-        if (isNaN(Number(blog_id)) || Number(blog_id) >= blog_json_dat.total_blogs ||
-            Number(blog_id) < 0){
+        const blog = blog_json_dat.blogs.find(
+        blog => create_blog_path(blog) === page
+        );
 
+        if (!blog) {
             await show_404(content, page);
             return;
         }
 
-        const blog_path = "/blog/blog_" + blog_id + ".html";
+        const blog_path = `${page}.html`;
 
         const response = await fetch(blog_path);
 
@@ -39,20 +54,13 @@ async function load_chosen_blog(page, update_history, content){
             return;
         }
 
-       const blog = blog_json_dat.blogs.find(
-        blog => blog.url === page
-        );
-
-        if (!blog) {
-            await show_404(content, page);
-            return;
-        }
-
         const blog_title = blog.title;
         const blog_description = blog.description;
         const blog_date = blog.date;
 
         content.innerHTML = await response.text();
+
+        content.classList.add("d-flex", "flex-column", "flex-grow-1");
 
         let title_element = document.createElement("h4");
         title_element.textContent = blog_title;
@@ -71,6 +79,18 @@ async function load_chosen_blog(page, update_history, content){
         date_element,
         description_element
         );
+
+        const back_button = document.createElement("button");
+        back_button.type = "button";
+        back_button.classList.add("btn-solid", "theme-primary", "mt-auto", "align-self-start", "mb-3");
+        back_button.textContent = "Go Back"
+
+        back_button.addEventListener("click", event => {
+            event.preventDefault();
+            load_page("/blog", true);
+        });
+
+        content.appendChild(back_button);
 
         if (update_history){
             history.pushState({}, "", page); 

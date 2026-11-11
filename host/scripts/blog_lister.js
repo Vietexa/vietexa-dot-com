@@ -1,3 +1,27 @@
+
+let sort_order = "new_first";
+let switch_state = false;
+
+function create_blog_path(blog){
+
+    const blog_title = blog.title;
+    let blog_path = "/blog/";
+
+    for (let c of blog_title){
+
+        if(c === " "){
+            blog_path += "-";
+        }
+        else{
+            blog_path += c.toLowerCase()
+        }
+
+    }
+
+    return blog_path;
+
+}
+
 function sort_blogs(blogs, sort_order){
 
 blogs.sort((a,b) => {
@@ -28,11 +52,14 @@ function create_blog_links(sorted_blogs){
 
         let blog_link = document.createElement("a");
         blog_link.text = `${blog.title} - ${blog.date}`;
-        blog_link.href = blog.url;
+
+        const blog_path = create_blog_path(blog);
+
+        blog_link.href = blog_path;
 
         blog_link.addEventListener("click", event => {
             event.preventDefault();
-            load_page(blog.url, true);
+            load_page(blog_path, true);
         })
 
         blog_list_entry.appendChild(blog_link);
@@ -51,11 +78,17 @@ async function list_blogs(){
 
     add_switch_event(blog_index);
 
+    let switch_toggle = document.getElementById("switchMdLabel");
+    switch_toggle.checked = switch_state;
+
+    let switch_label = document.getElementById("blog_switch_label");
+
+    switch_state ? switch_label.textContent = "Old Posts First" : switch_label.textContent = "New Posts First";
+    
+
     let blog_parent_list = document.createElement("ul");
     blog_parent_list.id = "blog_switch_p_list"
     blog_container.appendChild(blog_parent_list);
-
-    let sort_order = "new_first";
 
     let sorted_blogs = sort_blogs(blog_index.blogs, sort_order);
 
@@ -70,11 +103,12 @@ async function list_blogs(){
 
         blog_parent_list.replaceChildren();
         const toggle_date_sort = document.getElementById("switchMdLabel");
+
+        (toggle_date_sort.checked) ? switch_state = true : switch_state = false;
+
         let switch_label = document.getElementById("blog_switch_label");
 
-        let sort_order = "new_first"
-
-        if (toggle_date_sort.checked){
+        if (switch_state){
             sort_order = "old_first";
             switch_label.textContent = "Old Posts First";
         }
