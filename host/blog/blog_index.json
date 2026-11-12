@@ -1,19 +1,22 @@
 {
     "blogs": [
         {
-            "title": "My First Blog",
-            "description": "My first blog post",
-            "date": "11/09/2026"
+            "title": "Our First Blog Post",
+            "description": "Talking about our first blog post and upcoming posts.",
+            "date": "12/11/2026",
+            "author": "Dave"
         },
         {
             "title": "blog 1",
             "description": "blog1",
-            "date": "11/10/2026"
+            "date": "11/10/2026",
+            "author": "Dave"
         },
         {
             "title": "blog 2",
             "description": "blog2",
-            "date": "11/11/2026"
+            "date": "11/11/2026",
+            "author": "Dave"
         }
     ]
 }

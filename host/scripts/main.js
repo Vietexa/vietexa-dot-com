@@ -54,31 +54,30 @@ async function load_chosen_blog(page, update_history, content){
             return;
         }
 
-        const blog_title = blog.title;
-        const blog_description = blog.description;
-        const blog_date = blog.date;
+        const blog_title = `Title: ${blog.title}`;
+        const blog_description = `Description: ${blog.description}`;
+        const blog_date = `Date: ${blog.date}`;
+        const blog_author = `Author: ${blog.author}`;
 
         content.innerHTML = await response.text();
 
         content.classList.add("d-flex", "flex-column", "flex-grow-1");
 
-        let title_element = document.createElement("h4");
-        title_element.textContent = blog_title;
-        title_element.classList.add("text-center");
-       
-        let date_element = document.createElement("p");
-        date_element.textContent = blog_date;
-        date_element.classList.add("text-center");
+        let blog_info_element = document.createElement("p");
 
-        let description_element = document.createElement("p");
-        description_element.textContent = blog_description;
-        description_element.classList.add("text-center");
-    
-        content.prepend(
-        title_element,
-        date_element,
-        description_element
-        );
+        blog_info_element.innerHTML = `
+        ${blog_title}
+        <br> 
+        ${blog_date} 
+        <br> 
+        ${blog_author}
+        <br>
+        ${blog_description} 
+        `;
+
+        blog_info_element.classList.add("text-start","align-self-center", "mb-4");
+
+        content.prepend(blog_info_element);
 
         const back_button = document.createElement("button");
         back_button.type = "button";
