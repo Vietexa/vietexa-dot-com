@@ -6,6 +6,8 @@ const routes = {
 "/blog": "/pages/blog.html"
 };
 
+let blog_index = null;
+
 async function show_404(content, page){
 
 const response = await fetch("/pages/err_msg_404.html");
@@ -15,27 +17,10 @@ console.log(`Error: ${page} doesn't exist in routes!`);
 
 }
 
-/*function is_path_valid(page, blog_json_dat){
-
-    for (let blog of blog_json_dat.blogs){
-
-        const blog_path = create_blog_path(blog);
-
-        if (page === blog_path) return true;
-
-    }
-
-    return false;
-
-} */
 
 async function load_chosen_blog(page, update_history, content){
 
-        const blog_json_res = await fetch("/blog/blog_index.json");
-        const blog_json_dat = await blog_json_res.json();
-
-
-        const blog = blog_json_dat.blogs.find(
+        const blog = blog_index.blogs.find(
         blog => create_blog_path(blog) === page
         );
 
@@ -177,11 +162,23 @@ function setup_popstate(){
 
 }
 
+async function parse_index_json(){
+    const index_json_res = await fetch("/blog/blog_index.json");
+    blog_index = await index_json_res.json();
+}
+
+async function initialize_logic(){
+await parse_index_json();
 setup_nav();
 
 const page = window.location.pathname;
 
-load_page(page, false);
+await load_page(page, false);
 
 setup_popstate();
 load_footer();
+
+}
+
+initialize_logic();
+

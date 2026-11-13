@@ -1,6 +1,5 @@
 
 let sort_order = "new_first";
-let switch_state = false;
 
 function create_blog_path(blog){
 
@@ -26,7 +25,7 @@ function create_blog_path(blog){
 
 function sort_blogs(blogs, sort_order){
 
-blogs.sort((a,b) => {
+return blogs.toSorted((a,b) => {
         
         let date_a = new Date(a.date);
         let date_b = new Date(b.date);
@@ -40,7 +39,6 @@ blogs.sort((a,b) => {
 
     });
 
-    return blogs;
 }
 
 function create_blog_links(sorted_blogs){
@@ -71,21 +69,18 @@ function create_blog_links(sorted_blogs){
 }
 
 
-async function list_blogs(){
+function list_blogs(){
 
     let blog_container = document.getElementById("blog-container");
-
-    const json_data = await fetch("/blog/blog_index.json");
-    const blog_index = await json_data.json();
 
     add_switch_event(blog_index);
 
     let switch_toggle = document.getElementById("switchMdLabel");
-    switch_toggle.checked = switch_state;
+    switch_toggle.checked = sort_order === "old_first" ? true : false;
 
     let switch_label = document.getElementById("blog_switch_label");
 
-    switch_state ? switch_label.textContent = "Old Posts First" : switch_label.textContent = "New Posts First";
+    switch_toggle.checked ? switch_label.textContent = "Old Posts First" : switch_label.textContent = "New Posts First";
     
 
     let blog_parent_list = document.createElement("ul");
@@ -99,29 +94,21 @@ async function list_blogs(){
 
 }
 
-    function relist_blogs(blog_index){
+function relist_blogs(blog_index){
 
-        let blog_parent_list = document.getElementById("blog_switch_p_list");
+    let blog_parent_list = document.getElementById("blog_switch_p_list");
 
-        blog_parent_list.replaceChildren();
-        const toggle_date_sort = document.getElementById("switchMdLabel");
+    blog_parent_list.replaceChildren();
+    const toggle_date_sort = document.getElementById("switchMdLabel");
 
-        (toggle_date_sort.checked) ? switch_state = true : switch_state = false;
+    (toggle_date_sort.checked) ? sort_order = "old_first" : sort_order = "new_first";
 
-        let switch_label = document.getElementById("blog_switch_label");
+    let switch_label = document.getElementById("blog_switch_label");
 
-        if (switch_state){
-            sort_order = "old_first";
-            switch_label.textContent = "Old Posts First";
-        }
-        else {
-            sort_order = "new_first";
-            switch_label.textContent = "New Posts First";
-        }
-
-        let sorted_blogs = sort_blogs(blog_index.blogs, sort_order);
-        create_blog_links(sorted_blogs);
-
+    sort_order === "old_first" ?  switch_label.textContent = "Old Posts First" : switch_label.textContent = "New Posts First";
+        
+    let sorted_blogs = sort_blogs(blog_index.blogs, sort_order);
+    create_blog_links(sorted_blogs);
 
 }
 
