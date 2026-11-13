@@ -22,13 +22,13 @@ typedef struct xml_doc_s{
 } xml_doc_t;
 
 void convert_date(const char *input_date, string_dat_t *buf){
-struct tm time = {0};
-strptime(input_date, "%m/%d/%Y", &time);
+    struct tm time = {0};
+    strptime(input_date, "%m/%d/%Y", &time);
 
-time.tm_isdst = -1;
-mktime(&time);
+    time.tm_isdst = -1;
+    mktime(&time);
 
-strftime(buf->string, buf->capacity, "%a, %d %b %Y %H:%M:%S %z", &time);
+    strftime(buf->string, buf->capacity, "%a, %d %b %Y %H:%M:%S %z", &time);
 
 }
 
@@ -95,22 +95,24 @@ strftime(buf->string, buf->capacity, "%a, %d %b %Y %H:%M:%S %z", &time);
 }
 
 void title_to_link(char *title, char *link, size_t buf_size){
+    size_t j = 0;
 
-    char fmt_link[426];
+    char link_buf[426];
+    size_t link_buf_size = sizeof(link_buf);
 
-    size_t title_len = strlen(title);
-
-    for (size_t i = 0; i < title_len; i++){
+    for (size_t i = 0; title[i] != '\0' && j < link_buf_size - 1; i++){
         char c = tolower(title[i]);
 
-        if (c == ' ') fmt_link[i] = '-';
-        else fmt_link[i] = c;
+        if (c == '!'  || c == '?' || c == ','|| c == '.') continue;
+
+        if (c == ' ') link_buf[j++] = '-';
+        else link_buf[j++] = c;
 
     }
 
-    fmt_link[title_len] = '\0';
+    link_buf[j] = '\0';
 
-    snprintf(link, buf_size, "https://vietexa.com/blog/%s", fmt_link);
+    snprintf(link, buf_size, "https://vietexa.com/blog/%s", link_buf);
 
 }
 

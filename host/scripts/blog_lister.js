@@ -9,6 +9,8 @@ function create_blog_path(blog){
 
     for (let c of blog_title){
 
+        if (c === "!" || c === "?" || c === "," || c === ".") continue;
+
         if(c === " "){
             blog_path += "-";
         }
