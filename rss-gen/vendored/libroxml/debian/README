@@ -1,0 +1,16 @@
+The Debian Package libroxml
+----------------------------
+
+You may find more information on libroxml at:
+	http://www.libroxml.net
+
+This package contains the libroxml library and roxml binary:
+* libroxml
+	a light C XML library originally designed for embedded systems.
+	
+* roxml
+	binary used to execute xpath request on XML document from shell.
+
+Report any issue with this package to: 
+	Tristan Lelong <tristan.lelong@libroxml.net>
+

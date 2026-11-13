@@ -1,0 +1,21 @@
+<root xmlns="http://www.default.fr" xmlns:test="http://www.test.org" xmlns:test2="http://www.test.org" test2:value="1">
+ <test:node1/>
+ <node2 test:value="2"/>
+ <node3/>
+ <node4 value="3"/>
+ <test:node5 value="4"/>
+ <test:node6 id=3>
+  <node7/>
+  <node8 xmlns="">
+   <node9 />
+  </node8>
+ </test:node6>
+ <node10 xmlns="http://www.default.org">
+  <node11/>
+  <node12 xmlns="http://www.default2.org">
+   <node13/>
+   <node14 xmlns=""/>
+  </node12>
+  <node15/>
+ </node10>
+</root>

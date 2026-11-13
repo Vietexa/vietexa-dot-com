@@ -1,0 +1,202 @@
+libroxml (3.0.2-1) unstable; urgency=low
+  * Add
+      Escaping of XML characters
+
+  * Bugfixes
+      fix cdata node creation
+      build warnings
+      memory leak on xpath predicates
+
+libroxml (3.0.1-1) unstable; urgency=low
+
+  * Bugfixes
+      Fix cross compilation
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Sun, 06 May 2018 13:21:25 +0200
+
+libroxml (3.0.0-1) unstable; urgency=low
+  * Add
+      External linkage support for c++ projects
+      Replace list parse engine with map based one
+      Roxml_commit_file(), roxml_commit_fd() and roxml_commit_buffer() helpers
+      Subtree display too roxml tool
+      Rocat tool
+      Optional disabling support of float XML values
+      Basic XML validation during parsing
+      Header for all the source files updated to SPDX
+      Parser function locality
+      Global code refactor
+      Add support for XPath function local-name()
+      Update documentation
+
+  * Bugfixes
+      Fix tests
+      Fix various compilation warnings
+      Fix potential overflow and memory-leak related to namespace parsing
+      Fix CMake builds
+      Fix recursive delete of malformed tree
+      Fix wrong calculation for buffer realloc during commit
+      Fix spurious colon in default namespace
+
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Fri, 03 Mar 2017 23:22:18 +0000
+
+libroxml (2.3.0-1) unstable; urgency=low
+  * Add
+      switch to autotools
+      add the tuning options
+      re-organize sources
+
+  * Bugfixes
+      fix some lintian warnings
+      fix some coverity warnings
+      fix some cppchecks warnings
+      fix uninitialized variable causing bug in iOS
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Thu, 30 Jan 2014 10:48:43 -0800
+
+libroxml (2.2.3-1) unstable; urgency=low
+  * Add
+      static linking exception to LGPL v2.1 license
+      optimization for small systems (buffer size, heap/stack allocations...)
+
+  * Bugfixes
+      fix error on missing doxygen
+      fix generic/OSX install/uninstall
+      fix setting specific position on node creation
+      fix spelling mistake in ROXML_ALL_NODES define
+      fix missing \r into separators list
+      fix potential segfault on default namespaces
+      fix potential segfault when committing to a file
+      fix segfault when dest parameter is invalid
+      fix potential node leak
+      fix newer compiler warnings
+      fix memory leak on file load
+      fix xpath and handling in condition
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Wed, 11 Sep 2013 19:59:36 -0700
+
+libroxml (2.2.2-1) unstable; urgency=low
+  * Add
+      .gitignore
+
+  * Bugfixes
+      fix coding style
+      fix self referenced namespaces
+      fix bashism in Makefile
+      fix consistency issue on valid and not valid documents
+      fix memory leak when IGNORE_EMPTY_TEXT_NODES isn't defined
+      fix parsing of '<' and '>' in attributes
+      fix default namespace parsing
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Fri, 07 Jun 2013 15:06:28 -0700
+
+libroxml (2.2.1-1) unstable; urgency=low
+  * Add
+      optimization for xml file read and doc parsing
+      DOCTYPE are still ignored but are more consistent
+      remove dead code
+  * Bugfixes
+      fix issues on parsing quotes
+      fix xpath //parent segfault
+      fix double free in roxml_del_node
+      fix windows issue when reading \r\n
+      fix multiple namespace declaration
+      fix source format for debianization
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Tue, 27 Nov 2012 10:16:16 -0800
+
+libroxml (2.2.0-1) unstable; urgency=low
+  * Add
+      namespace handling
+      improve CDATA handling
+      possibility to change an attribute value
+  * Bugfixes
+      fix namespace inheritance
+      fix build issues
+      fix internal priv data location coherency
+      fix potential error when parsing big XML file 
+      fix roxml_xpath crash 
+      fix multiple roxml_commit_changes increase xml file size 
+      fix libroxml fails to parse single-quoted attributes 
+      fix leak in roxml_del_node for attribute node 
+      fix memory leak for attributes and namespace definition 
+      fix missing indirection on len pointer when buffer is not long enought 
+      fix potential access to freed memory 
+      fix roxml_commit_changes that added a whitespaces
+      fix xpath compare on quoted numbers
+  * Update
+      documentation
+
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Fri, 1 Jun 2012 16:03:28 +0200
+
+libroxml (2.1.2-1) unstable; urgency=low
+  * Bugfixes
+      fix string compare in xpath fail
+      fix Xpath shorten condition detection failure
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Tue, 29 Nov 2011 19:13:00 +0100
+
+libroxml (2.1.1-1) unstable; urgency=low
+  * Bugfixes
+      fix roxml_commit_change() when trying to export a subtree
+      fix some doc and debianization errors
+      fix doxygen error in documentation
+      fix error in xpath request handling
+  * Update licence text: LGPL v2.1
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Tue, 20 Sep 2011 15:08:00 +0100
+
+libroxml (2.1.0-1) unstable; urgency=low
+  * Bugfixes
+      fix syntax for process-instructions
+      fix write of text node insode roxml_commit_changes
+      fix commit change to large buffers
+      fix get content on empty attributes
+      fix doxygen installation if not available
+  * Update documentation
+  * Text nodes are now handled as child nodes with comment and
+    process-instructions (save about 10% memory for a tree)
+  * roxml_add_node allow you to create valid XML documents
+  * Add some API functions
+      roxml_get_pi() and roxml_get_pi_nb() to get process instruction nodes
+      roxml_get_cmt() and roxml_get_cmt_nb() to get all comment nodes
+      roxml_get_nodes() and roxml_get_nodes_nb() to get all wanted nodes
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Sun, 24 Jul 2011 23:13:00 +0100
+
+libroxml (2.0.3-1) unstable; urgency=low
+
+  * Bugfixes
+      correct various potential memory leaks (valgrind says it's ok now)
+      correct race condition in xpath requests
+      correct bug on attributes parsing
+      fix roxml behaviour on children with no text content
+
+  * add roxml_get_{root,prev_sibling,next_sibling} functions
+  * improve internal read functions
+  * rename ROXML_STD_NODE by ROXML_ELM_NODE
+  * enable native window compilation (no need for pthreadVC.dll)
+  * enable OSX compilation
+  * add CMakeLists.txt for linux/window compilation
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Tue, 12 Apr 2011 18:03:00 +0100
+
+libroxml (2.0.2-1) unstable; urgency=low
+
+  * Bugfixes
+      parsing attributes with whitespace
+      add quotes around attributes values during write
+      windows build warnings
+  * Documentation update
+     add ewamples
+     more precise descriptions
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Wed, 09 Feb 2011 18:33:00 +0100
+
+libroxml (2.0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: Bug#574668)
+
+ -- Tristan Lelong <tristan.lelong@libroxml.net>  Sun, 05 Oct 2010 17:35:43 +0100

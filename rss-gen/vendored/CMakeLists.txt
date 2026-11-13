@@ -1,0 +1,2 @@
+add_subdirectory(libroxml)
+add_subdirectory(cjson)

@@ -1,0 +1,21 @@
+#!/bin/sh
+PARAM="-npro -kr -i8 -ts8 -l120 -sob -ss -ncs -cp1"
+RES=`indent --version`
+V1=`echo $RES | cut -d' ' -f3 | cut -d'.' -f1`
+V2=`echo $RES | cut -d' ' -f3 | cut -d'.' -f2`
+V3=`echo $RES | cut -d' ' -f3 | cut -d'.' -f3`
+if [ $V1 -gt 2 ]; then
+  PARAM="$PARAM -il0"
+elif [ $V1 -eq 2 ]; then
+  if [ $V2 -gt 2 ]; then
+    PARAM="$PARAM -il0";
+  elif [ $V2 -eq 2 ]; then
+    if [ $V3 -ge 10 ]; then
+      PARAM="$PARAM -il0"
+    fi
+  fi
+fi
+
+TYPES="-T FILE -T memory_cell_t -T xpath_cond_t -T xpath_node_t -T xpath_tok_table_t -T xpath_tok_t -T roxml_ns_t -T node_t -T roxml_load_ctx_t -T roxml_xpath_ctx_t -T roxml_parser_item_t"
+
+indent $PARAM $TYPES "$@"
