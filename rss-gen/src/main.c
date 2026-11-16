@@ -154,6 +154,9 @@ node_t *prepare_site_map(void){
     node_t *url_blog = roxml_add_node(urlset_node, 0 ,ROXML_ELM_NODE, "url", NULL);
     roxml_add_node(url_blog, 0, ROXML_ELM_NODE, "loc", "https://vietexa.com/blog");
 
+    node_t *url_about_us = roxml_add_node(urlset_node, 0 ,ROXML_ELM_NODE, "url", NULL);
+    roxml_add_node(url_about_us, 0, ROXML_ELM_NODE, "loc", "https://vietexa.com/about-us");
+
     return urlset_node;
 
 }

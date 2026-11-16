@@ -1,6 +1,7 @@
 
 const routes = {
 "/": "/pages/home.html",
+"/about-us": "/pages/about-us.html",
 "/socials": "/pages/socials.html",
 "/contact": "/pages/contact.html",
 "/blog": "/pages/blog.html"
