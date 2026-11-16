@@ -136,6 +136,28 @@ void title_to_link(char *title, char *link, size_t buf_size){
 	return doc;
 }
 
+node_t *prepare_site_map(void){
+    node_t *site_map_node = roxml_add_node(NULL, 0, ROXML_PI_NODE, "xml", "version=\"1.0\" encoding=\"UTF-8\"");
+    node_t *urlset_node =  roxml_add_node(site_map_node, 0 ,ROXML_ELM_NODE, "urlset", NULL);
+    roxml_add_node(urlset_node, 0 ,ROXML_ATTR_NODE, "xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+    // add the other parts of the site by hand
+    node_t *url_root = roxml_add_node(urlset_node, 0 ,ROXML_ELM_NODE, "url", NULL);
+    roxml_add_node(url_root, 0, ROXML_ELM_NODE, "loc", "https://vietexa.com/");
+
+    node_t *url_socials = roxml_add_node(urlset_node, 0 ,ROXML_ELM_NODE, "url", NULL);
+    roxml_add_node(url_socials, 0, ROXML_ELM_NODE, "loc", "https://vietexa.com/socials");
+
+    node_t *url_contact = roxml_add_node(urlset_node, 0 ,ROXML_ELM_NODE, "url", NULL);
+    roxml_add_node(url_contact, 0, ROXML_ELM_NODE, "loc", "https://vietexa.com/contact");
+
+    node_t *url_blog = roxml_add_node(urlset_node, 0 ,ROXML_ELM_NODE, "url", NULL);
+    roxml_add_node(url_blog, 0, ROXML_ELM_NODE, "loc", "https://vietexa.com/blog");
+
+    return urlset_node;
+
+}
+
 
 int main(void){
 
@@ -187,6 +209,8 @@ int main(void){
         json_gen->valuestring
     );
 
+    node_t *site_map_doc =  prepare_site_map();
+
     cJSON *blogs = cJSON_GetObjectItemCaseSensitive(site_json, "blogs");
     cJSON *blog = NULL;
 
@@ -213,6 +237,9 @@ int main(void){
 
         title_to_link(blog_title->valuestring, link_buf, sizeof(link_buf));
 
+        node_t *url = roxml_add_node(site_map_doc, 0 ,ROXML_ELM_NODE, "url", NULL);
+        roxml_add_node(url, 0, ROXML_ELM_NODE, "loc", link_buf);
+
         node_t *item = roxml_add_node(xml_doc.channel,0, ROXML_ELM_NODE, "item", NULL);
 
         roxml_add_node(item,0, ROXML_ELM_NODE, "title", blog_title->valuestring);
@@ -226,11 +253,13 @@ int main(void){
     }
 
     roxml_commit_file(xml_doc.root,"feed.xml",1);
+    roxml_commit_file(site_map_doc, "../../host/sitemap.xml", 1);
 
     free(site_json_file_buf.string);
     free(config_json_file_buf.string);
 
     roxml_close(xml_doc.root);
+    roxml_close(site_map_doc);
     cJSON_Delete(config_json);
     cJSON_Delete(site_json);
 
